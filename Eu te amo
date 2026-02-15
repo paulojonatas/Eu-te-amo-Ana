@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Você ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fdfdfd;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 800px;
+            height: 650px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* O Bonequinho (Representação) */
+        .character {
+            position: absolute;
+            left: 20px;
+            bottom: 50px;
+            text-align: center;
+        }
+        
+        .character img {
+            width: 120px; /* Ajuste o tamanho da sua imagem aqui */
+        }
+
+        .biu-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            right: 100px;
+            top: 40px;
+            transform: rotate(10deg);
+        }
+
+        /* Container dos corações */
+        .heart-grid {
+            position: absolute;
+            right: 5px;
+            display: grid;
+            grid-template-columns: repeat(13, 25px);
+            grid-template-rows: repeat(11, 25px);
+            gap: 2px;
+        }
+
+        /* Estilo de cada coração individual */
+        .heart-unit {
+            width: 20px;
+            height: 20px;
+            background-image: url('coracao.png'); /* URL de um coração */
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transform: scale(0);
+            animation: popIn 0.3s forwards;
+        }
+
+        /* Animação para os corações aparecerem um por um */
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="character">
+        <img src="boneco.png" alt="Bjs">
+        <div class="Bjs-text">Eu te amo</div>
+    </div>
+
+    <div class="heart-grid" id="grid"></div>
+</div>
+
+<script>
+    // Matriz que desenha o formato do coração (1 = coração, 0 = vazio)
+    const heartPattern = [
+        [0,0,1,1,0,0,0,0,0,1,1,0,0],
+        [0,1,1,1,1,0,0,0,1,1,1,1,0],
+        [1,1,1,1,1,1,0,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [0,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,1,1,1,1,1,1,1,1,1,0,0],
+        [0,0,0,1,1,1,1,1,1,1,0,0,0],
+        [0,0,0,0,1,1,1,1,1,0,0,0,0],
+        [0,0,0,0,0,1,1,1,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,0,0,0]
+    ];
+
+    const grid = document.getElementById('grid');
+
+    // Função para criar o desenho
+    heartPattern.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+            const div = document.createElement('div');
+            if (cell === 1) {
+                div.className = 'heart-unit';
+                // Delay para criar o efeito de "construção"
+                div.style.animationDelay = (rowIndex * 0.1 + colIndex * 0.05) + 's';
+                grid.appendChild(div);
+            } else {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
